@@ -5,6 +5,8 @@
 
 #include <xccompat.h>
 #include <stdint.h>
+#include <inttypes.h>
+
 #include "rgmii.h"
 #include "ethernet.h"
 #include "default_ethernet_conf.h"
@@ -34,9 +36,9 @@ typedef struct buffers_used_t {
 #endif
 
 void buffers_free_initialize(REFERENCE_PARAM(buffers_free_t, free), unsigned char *buffer,
-                             unsigned *pointers, unsigned buffer_count);
+                             uint64_t *pointers, unsigned buffer_count);
 
-void buffers_used_initialize(REFERENCE_PARAM(buffers_used_t, used), unsigned *pointers);
+void buffers_used_initialize(REFERENCE_PARAM(buffers_used_t, used), uint64_t *pointers);
 
 void empty_channel(streaming_chanend_t c);
 

@@ -35,7 +35,7 @@ static inline unsigned int get_tile_id_from_chanend(streaming chanend c) {
 #define UNLOCK(buffers) hwlock_release(ethernet_memory_lock)
 
 void buffers_free_initialize(buffers_free_t &free, unsigned char *buffer,
-                             unsigned *pointers, unsigned buffer_count)
+                             uint64_t *pointers, unsigned buffer_count)
 {
   free.top_index = buffer_count;
   unsafe {
@@ -46,12 +46,12 @@ void buffers_free_initialize(buffers_free_t &free, unsigned char *buffer,
   }
 }
 
-void buffers_used_initialize(buffers_used_t &used, unsigned *pointers)
+void buffers_used_initialize(buffers_used_t &used, uint64_t *pointers)
 {
   used.head_index = 0;
   used.tail_index = 0;
   unsafe {
-    used.pointers = pointers;
+    used.pointers = (unsigned *)pointers;
   }
 }
 

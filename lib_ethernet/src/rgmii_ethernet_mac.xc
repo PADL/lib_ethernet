@@ -1,6 +1,7 @@
 // Copyright 2015-2021 XMOS LIMITED.
 // This Software is subject to the terms of the XMOS Public Licence: Version 1.
 #include <xs1.h>
+#include <inttypes.h>
 #include "xassert.h"
 #include "ethernet.h"
 #include "rgmii.h"
@@ -100,20 +101,20 @@ void rgmii_ethernet_mac(server ethernet_rx_if i_rx_lp[n_rx_lp], static const uns
   mii_init_lock();
 
   unsafe {
-    unsigned int buffer_rx[RGMII_MAC_BUFFER_COUNT_RX * sizeof(mii_packet_t) / 4];
-    unsigned int buffer_free_pointers_rx[RGMII_MAC_BUFFER_COUNT_RX];
-    unsigned int buffer_used_pointers_rx_lp[RGMII_MAC_BUFFER_COUNT_RX + 1];
-    unsigned int buffer_used_pointers_rx_hp[RGMII_MAC_BUFFER_COUNT_RX + 1];
+    uint64_t buffer_rx[RGMII_MAC_BUFFER_COUNT_RX * sizeof(mii_packet_t) / 8];
+    uint64_t buffer_free_pointers_rx[RGMII_MAC_BUFFER_COUNT_RX / 2];
+    uint64_t buffer_used_pointers_rx_lp[RGMII_MAC_BUFFER_COUNT_RX / 2 + 1];
+    uint64_t buffer_used_pointers_rx_hp[RGMII_MAC_BUFFER_COUNT_RX / 2 + 1];
     buffers_free_t free_buffers_rx;
     buffers_used_t used_buffers_rx_lp;
     buffers_used_t used_buffers_rx_hp;
 
-    unsigned int buffer_tx_lp[RGMII_MAC_BUFFER_COUNT_TX * sizeof(mii_packet_t) / 4];
-    unsigned int buffer_tx_hp[RGMII_MAC_BUFFER_COUNT_TX * sizeof(mii_packet_t) / 4];
-    unsigned int buffer_free_pointers_tx_lp[RGMII_MAC_BUFFER_COUNT_TX];
-    unsigned int buffer_free_pointers_tx_hp[RGMII_MAC_BUFFER_COUNT_TX];
-    unsigned int buffer_used_pointers_tx_lp[RGMII_MAC_BUFFER_COUNT_TX + 1];
-    unsigned int buffer_used_pointers_tx_hp[RGMII_MAC_BUFFER_COUNT_TX + 1];
+    uint64_t buffer_tx_lp[RGMII_MAC_BUFFER_COUNT_TX * sizeof(mii_packet_t) / 8];
+    uint64_t buffer_tx_hp[RGMII_MAC_BUFFER_COUNT_TX * sizeof(mii_packet_t) / 8];
+    uint64_t buffer_free_pointers_tx_lp[RGMII_MAC_BUFFER_COUNT_TX / 2];
+    uint64_t buffer_free_pointers_tx_hp[RGMII_MAC_BUFFER_COUNT_TX / 2];
+    uint64_t buffer_used_pointers_tx_lp[RGMII_MAC_BUFFER_COUNT_TX / 2 + 1];
+    uint64_t buffer_used_pointers_tx_hp[RGMII_MAC_BUFFER_COUNT_TX / 2 + 1];
     buffers_free_t free_buffers_tx_lp;
     buffers_free_t free_buffers_tx_hp;
     buffers_used_t used_buffers_tx_lp;
